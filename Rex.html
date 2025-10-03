@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kontakt / Outcome – Infonet</title>
+  <meta name="description" content="Brzi kontakt sa timom: Prodaja, Podrška, Opći upit, Karijere. Do cilja u ≤ 3 klika." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand">Infonet</div>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link">About</a>
+
+        <!-- Contact dropdown -->
+        <div class="dropdown">
+          <button id="contactToggle" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Contact ▾
+          </button>
+          <div id="contactDropdown" class="dropdown-menu" role="menu" aria-labelledby="contactToggle" hidden>
+            <button class="dropdown-item js-nav-target" role="menuitem" data-target="sales">Prodaja</button>
+            <button class="dropdown-item js-nav-target" role="menuitem" data-target="support">Podrška</button>
+            <button class="dropdown-item js-nav-target" role="menuitem" data-target="general">Opći upit</button>
+            <button class="dropdown-item js-nav-target" role="menuitem" data-target="careers">Karijere</button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="header-right"></div>
+    </div>
+  </header>
+
+  <!-- Minimal top -->
+  <div class="hero">
+    <div class="wrap">
+      <h1>Kontaktirajte naš tim</h1>
+      <p class="lead">Brzo do pravog ishoda u najviše tri klika: <strong>Prodaja</strong>, <strong>Podrška</strong>, <strong>Opći upit</strong>, <strong>Karijere</strong>.</p>
+
+      <!-- (Tabs removed per request) -->
+      <!-- Previously: .paths tab buttons -->
+    </div>
+  </div>
+
+  <!-- Panels -->
+  <main class="wrap panels" id="main">
+    <!-- SALES -->
+    <section id="sales" class="panel active" role="tabpanel" aria-labelledby="tab-sales">
+      <h2>Prodaja</h2>
+      <p class="help">Poruke idu direktno na <strong>sales@infonet.ba</strong>.</p>
+      <form onsubmit="demoConfirm(event,this)" novalidate enctype="multipart/form-data" aria-describedby="sales-confirm sales-error">
+        <div>
+          <label for="s-name">Ime i prezime *</label>
+          <input id="s-name" class="field" required autocomplete="name" />
+        </div>
+        <div>
+          <label for="s-email">Email *</label>
+          <input id="s-email" class="field" type="email" required autocomplete="email" />
+        </div>
+        <div class="full">
+          <label for="s-msg">Poruka *</label>
+          <textarea id="s-msg" class="field" required></textarea>
+        </div>
+        <div class="full">
+          <label for="s-files">Privitak (opcionalno)</label>
+          <input id="s-files" class="field" type="file" multiple accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.txt" />
+        </div>
+        <div class="actions full">
+          <button class="btn" type="submit">Pošalji prodaji</button>
+          <a class="btn secondary" href="mailto:sales@infonet.ba">Email prodaji</a>
+        </div>
+        <p id="sales-confirm" class="confirm" role="status">Poruka poslana na sales@infonet.ba</p>
+        <p id="sales-error" class="error" role="alert">Došlo je do greške. Pokušajte ponovo.</p>
+      </form>
+    </section>
+
+    <!-- SUPPORT -->
+    <section id="support" class="panel" role="tabpanel" aria-labelledby="tab-support">
+      <h2>Podrška</h2>
+      <div class="callout" role="note">
+        Gosti: možete kreirati tiket ili pokrenuti TeamViewer za udaljenu pomoć.
+      </div>
+      <div class="links">
+        <a class="btn secondary" href="https://tv.infonet.ba" target="_blank" rel="noopener">Pokreni Remote Help</a>
+        <a class="btn" href="https://support.infonet.ba" target="_blank" rel="noopener">Otvori Support Portal</a>
+      </div>
+
+      <form onsubmit="demoConfirm(event,this)" novalidate enctype="multipart/form-data" aria-describedby="sup-confirm sup-error">
+        <div>
+          <label for="t-name">Ime i prezime *</label>
+          <input id="t-name" class="field" required autocomplete="name" />
+        </div>
+        <div>
+          <label for="t-email">Email *</label>
+          <input id="t-email" class="field" type="email" required autocomplete="email" />
+        </div>
+        <div class="full">
+          <label for="t-subject">Kratki naslov *</label>
+          <input id="t-subject" class="field" required />
+        </div>
+        <div class="full">
+          <label for="t-desc">Šta je pošlo po zlu? *</label>
+          <textarea id="t-desc" class="field" required></textarea>
+        </div>
+        <div class="full">
+          <label for="t-files">Privitak (opcionalno)</label>
+          <input id="t-files" class="field" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.txt,.log" />
+        </div>
+        <div class="actions full">
+          <button class="btn" type="submit">Kreiraj tiket</button>
+        </div>
+        <p id="sup-confirm" class="confirm" role="status">Tiket kreiran. Potvrda poslana na email.</p>
+        <p id="sup-error" class="error" role="alert">Greška pri slanju. Pokušajte ponovo.</p>
+      </form>
+    </section>
+
+    <!-- GENERAL -->
+    <section id="general" class="panel" role="tabpanel" aria-labelledby="tab-general">
+      <h2>Opći upit</h2>
+      <p class="help">Za pitanja koja nisu prodaja/podrška – stiže u <strong>info@infonet.ba</strong>.</p>
+      <form onsubmit="demoConfirm(event,this)" novalidate enctype="multipart/form-data" aria-describedby="gen-confirm gen-error">
+        <div>
+          <label for="g-name">Ime i prezime *</label>
+          <input id="g-name" class="field" required autocomplete="name" />
+        </div>
+        <div>
+          <label for="g-email">Email *</label>
+          <input id="g-email" class="field" type="email" required autocomplete="email" />
+        </div>
+        <div class="full">
+          <label for="g-msg">Poruka *</label>
+          <textarea id="g-msg" class="field" required></textarea>
+        </div>
+        <div class="full">
+          <label for="g-files">Privitak (opcionalno)</label>
+          <input id="g-files" class="field" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.txt" />
+        </div>
+        <div class="actions full">
+          <button class="btn" type="submit">Pošalji</button>
+          <a class="btn secondary" href="mailto:info@infonet.ba">Email</a>
+        </div>
+        <p id="gen-confirm" class="confirm" role="status">Poruka poslana na info@infonet.ba</p>
+        <p id="gen-error" class="error" role="alert">Došlo je do greške. Pokušajte ponovo.</p>
+      </form>
+    </section>
+
+    <!-- CAREERS -->
+    <section id="careers" class="panel" role="tabpanel" aria-labelledby="tab-careers">
+      <h2>Karijere</h2>
+
+      <div class="full block-gap">
+        <h3 class="tight">Otvorene pozicije</h3>
+        <div class="role-grid" aria-label="Otvorene pozicije">
+          <a class="role-card" href="/careers/systems-engineer">
+            <div class="title">Systems Engineer</div>
+            <div class="help">Pogledaj detalje →</div>
+          </a>
+          <a class="role-card" href="/careers/account-manager">
+            <div class="title">Account Manager</div>
+            <div class="help">Pogledaj detalje →</div>
+          </a>
+          <a class="role-card" href="/careers/service-desk-technician">
+            <div class="title">Service Desk Technician</div>
+            <div class="help">Pogledaj detalje →</div>
+          </a>
+          <a class="role-card" href="/careers/project-coordinator">
+            <div class="title">Project Coordinator</div>
+            <div class="help">Pogledaj detalje →</div>
+          </a>
+        </div>
+      </div>
+
+      <h3 class="section-title">Ili pošaljite generalnu prijavu</h3>
+      <form onsubmit="demoConfirm(event,this)" novalidate enctype="multipart/form-data" aria-describedby="car-confirm car-error">
+        <div>
+          <label for="c-name">Ime i prezime *</label>
+          <input id="c-name" class="field" required autocomplete="name" />
+        </div>
+        <div>
+          <label for="c-email">Email *</label>
+          <input id="c-email" class="field" type="email" required autocomplete="email" />
+        </div>
+        <div class="full">
+          <label for="c-role">Pozicija (opcionalno)</label>
+          <input id="c-role" class="field" />
+        </div>
+        <div class="full">
+          <label for="c-cv">CV / Portfolio *</label>
+          <input id="c-cv" class="field" type="file" required accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" />
+        </div>
+        <div class="full">
+          <label for="c-link">Portfolio link (opcionalno)</label>
+          <input id="c-link" class="field" type="url" placeholder="https://..." />
+        </div>
+        <div class="actions full">
+          <button class="btn" type="submit">Pošalji prijavu</button>
+          <a class="btn secondary" href="mailto:hr@infonet.ba">Piši HR-u</a>
+        </div>
+        <p id="car-confirm" class="confirm" role="status">Prijava poslana na hr@infonet.ba</p>
+        <p id="car-error" class="error" role="alert">Greška pri slanju. Pokušajte ponovo.</p>
+      </form>
+    </section>
+
+    <p class="meta">Dostupnost: WCAG 2.1 AA, GDPR usklađeno (bez obaveznih checkboxa), prilagođeno mobilnim i desktop uređajima.</p>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

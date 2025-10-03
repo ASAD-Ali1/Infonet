@@ -1,0 +1,176 @@
+:root{
+  --bg:#0f2433; --card:#ffffff; --ink:#0b1320; --muted:#6b7280;
+  --brand:#0ea5e9; --ring:#0ea5e9; --ok:#16a34a; --err:#dc2626;
+  --bd:#e5e7eb; --radius:16px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Helvetica,Arial;
+  color:var(--ink);
+  background:#f6f7fb;
+  line-height:1.55;
+}
+
+/* ===== Header ===== */
+.site-header {
+  background:black;
+  color:#fff;
+  padding:20px 0;   /* adds extra vertical space above/below the inner content */
+}
+
+.header-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:44px 20px;
+}
+.brand{font-weight:700;font-size:18px}
+.main-nav{display:flex;align-items:center;gap:24px;position:relative}
+.nav-link{
+  color:#ffffff; text-decoration:none; font-size:14px;
+}
+.nav-link:hover{ text-decoration:underline }
+
+/* ===== Dropdown (improved) ===== */
+.dropdown{ position:relative }
+
+.dropdown-toggle{
+  background:none; border:0; color:#fff; cursor:pointer; font:inherit; padding:0;
+  display:inline-flex; align-items:center; gap:6px; line-height:1;
+}
+.dropdown-toggle:focus-visible{
+  outline:3px solid rgba(255,255,255,.35); outline-offset:3px; border-radius:6px;
+}
+
+/* Menu card */
+.dropdown-menu{
+  position:absolute; top:calc(100% + 10px); left:0; min-width:240px; max-width:320px;
+  background:#ffffff; color:#111827; border:1px solid #e5e7eb; border-radius:12px;
+  box-shadow:0 20px 40px rgba(2,6,23,.18), 0 6px 16px rgba(2,6,23,.08);
+  padding:6px; z-index:1000;
+
+  /* animated open */
+  transform-origin: top left;
+  transform: scale(.98) translateY(-6px);
+  opacity:0; pointer-events:none;
+  transition: opacity .25s ease, transform .25s ease; /* increased from .14s */
+}
+
+/* visible state (JS toggles [hidden]) */
+.dropdown-menu:not([hidden]){
+  opacity:1; transform: scale(1) translateY(0); pointer-events:auto;
+}
+
+/* visible state (JS toggles [hidden]) */
+.dropdown-menu:not([hidden]){
+  opacity:1; transform: scale(1) translateY(0); pointer-events:auto;
+}
+
+/* arrow nub */
+.dropdown-menu::before{
+  content:""; position:absolute; top:-8px; left:16px; width:14px; height:14px;
+  background:#fff; border-left:1px solid #e5e7eb; border-top:1px solid #e5e7eb;
+  transform:rotate(45deg);
+}
+
+/* items */
+.dropdown-item{
+  width:100%; display:block; text-align:left;
+  padding:10px 12px; border-radius:8px; color:#111827; text-decoration:none;
+  font-size:14px; line-height:1.4; background:transparent; border:0; cursor:pointer;
+}
+.dropdown-item:hover{ background:#f3f4f6 }
+.dropdown-item:focus-visible{
+  outline:3px solid rgba(14,165,233,.35); outline-offset:2px; border-radius:8px;
+}
+
+/* mobile: keep menu on-screen */
+@media (max-width:520px){
+  .dropdown-menu{ min-width:200px; left:auto; right:0; transform-origin: top right; }
+  .dropdown-menu::before{ left:auto; right:16px; }
+}
+
+/* right side placeholder */
+.header-right{font-size:14px;color:#e5e7eb}
+
+/* ===== Existing styles (unchanged) ===== */
+
+/* Top hero (kept minimal, no controls) */
+.hero{
+  background: radial-gradient(1100px 600px at 80% -20%, rgba(255,255,255,.08), transparent 60%), var(--bg);
+  color:#fff; padding:48px 20px 36px;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+h1{margin:0 0 10px;font-size:clamp(28px,4vw,44px);line-height:1.15}
+.lead{max-width:720px;color:#c7d2fe;opacity:.9;margin:0}
+
+/* Tabs (kept but unused now) */
+.paths{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;margin:24px 0 0;
+}
+@media (max-width:960px){.paths{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.paths{grid-template-columns:1fr}}
+.path-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.10); color:#fff;
+  padding:14px 16px; border-radius:14px; text-decoration:none;
+  font-weight:700; outline-offset:3px; cursor:pointer; transition:background .2s;
+  min-height:48px;
+}
+.path-btn:hover{background:rgba(255,255,255,.18)}
+.path-btn[aria-selected="true"]{background:#fff;color:var(--ink)}
+.path-btn:focus-visible{outline:3px solid #fff}
+
+/* Panels area */
+main{margin-top:-20px}
+.panels{padding:24px 0}
+.panel{
+  background:var(--card); border:1px solid var(--bd); border-radius:var(--radius);
+  padding:24px; box-shadow:0 8px 24px rgba(2,6,23,.07); display:none;
+}
+.panel + .panel{margin-top:20px}
+.panel.active{display:block}
+.panel h2{margin:0 0 12px; font-size:22px}
+.help{color:var(--muted);font-size:13px;margin:0 0 10px}
+
+/* Forms */
+form{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:16px; margin-top:6px;
+}
+form .full{grid-column:1/-1}
+label{font-size:14px;font-weight:600;display:block;margin-bottom:6px}
+.field{
+  width:100%; padding:12px; border:1px solid var(--bd); border-radius:12px; background:#fff; font:inherit;
+}
+textarea.field{min-height:120px; resize:vertical}
+.field:focus{outline:none;border-color:var(--ring);box-shadow:0 0 0 3px rgba(14,165,233,.15)}
+
+/* Actions */
+.actions{display:flex;gap:12px;align-items:center;margin-top:2px}
+.btn{appearance:none;border:0;background:var(--brand);color:#fff;padding:12px 16px;border-radius:12px;font-weight:700;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block}
+.btn:hover{background:#0284c7}
+.btn.secondary{background:#1118270d;color:#0b1320;border:1px solid var(--bd)}
+
+/* Cards / links */
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.callout{background:#f0f9ff;border:1px solid #bae6fd;padding:12px 14px;border-radius:12px;font-size:14px;margin-bottom:12px}
+
+/* Careers grid */
+.role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (max-width:720px){.role-grid{grid-template-columns:1fr}}
+.role-card{display:block;border:1px solid var(--bd);background:#f8fafc;border-radius:12px;padding:14px;text-decoration:none;color:inherit;transition:box-shadow .2s, background .2s}
+.role-card:hover{background:#eef2f7;box-shadow:0 6px 16px rgba(2,6,23,.06)}
+.role-card .title{font-weight:700}
+
+/* Status text */
+.confirm{display:none;margin-top:12px;font-weight:600;color:var(--ok)}
+.error{display:none;margin-top:12px;font-weight:600;color:var(--err)}
+
+.meta{margin:8px 0 28px;color:var(--muted);font-size:13px;text-align:center}
+
+/* Utilities */
+.block-gap{margin-bottom:8px}
+.tight{margin:0 0 8px}
+.section-title{margin:16px 0 8px}
