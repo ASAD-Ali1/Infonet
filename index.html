@@ -14,7 +14,7 @@
     <div class="wrap header-inner">
       <div class="brand">Infonet</div>
       <nav class="main-nav" aria-label="Primary">
-        <a href="#" class="nav-link">Home</a>
+        <button type="button" class="nav-link js-nav-target" data-target="home">Home</button>
         <a href="#" class="nav-link">About</a>
 
         <!-- Contact dropdown -->
@@ -48,8 +48,18 @@
 
   <!-- Panels -->
   <main class="wrap panels" id="main">
+    <section id="home" class="panel active home-panel" role="tabpanel" aria-labelledby="tab-home">
+      <div class="home-banner">
+        <video class="home-banner__video" autoplay muted loop playsinline aria-hidden="true" tabindex="-1">
+          <source src="https://cdn.pixabay.com/video/2025/02/08/257205_large.mp4" type="video/mp4" />
+        </video>
+        <div class="home-banner__content">
+          <h1 class="home-title">Home page Simulation</h1>
+        </div>
+      </div>
+    </section>
     <!-- SALES -->
-    <section id="sales" class="panel active" role="tabpanel" aria-labelledby="tab-sales">
+    <section id="sales" class="panel" role="tabpanel" aria-labelledby="tab-sales">
       <h2>Prodaja</h2>
       <p class="help">Poruke idu direktno na <strong>sales@infonet.ba</strong>.</p>
       <form onsubmit="demoConfirm(event,this)" novalidate enctype="multipart/form-data" aria-describedby="sales-confirm sales-error">
@@ -205,7 +215,6 @@
       </form>
     </section>
 
-    <p class="meta">Dostupnost: WCAG 2.1 AA, GDPR usklađeno (bez obaveznih checkboxa), prilagođeno mobilnim i desktop uređajima.</p>
   </main>
 
   <script src="app.js" defer></script>

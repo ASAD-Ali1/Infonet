@@ -67,12 +67,31 @@
 /* ===== Panels activation ===== */
 const tabs = Array.from(document.querySelectorAll('[role="tab"]')); // none now, safe
 const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+const mainNavTriggers = Array.from(document.querySelectorAll('.main-nav > .js-nav-target'));
+
+mainNavTriggers.forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    const id = trigger.getAttribute('data-target');
+    if (id) activate(id);
+  });
+});
+
+const initialActive = panels.find(p => p.classList.contains('active'));
+if (initialActive) {
+  document.body.classList.toggle('home-active', initialActive.id === 'home');
+}
 
 function activate(id){
   // If any legacy tabs exist, sync them (no-op otherwise)
   tabs.forEach(t => t.setAttribute('aria-selected', t.getAttribute('aria-controls') === id));
   panels.forEach(p => p.classList.toggle('active', p.id === id));
-  document.getElementById('main').scrollIntoView({ behavior:'smooth', block:'start' });
+  document.body.classList.toggle('home-active', id === 'home');
+  if (id === 'home') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    document.getElementById('main').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
 }
 
 /* ===== Demo confirmation (unchanged) ===== */
