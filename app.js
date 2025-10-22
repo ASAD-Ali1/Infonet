@@ -126,7 +126,7 @@ window.demoConfirm = demoConfirm;
   const productCards = Array.from(productList.querySelectorAll('[data-product-card]'));
   if (!productCards.length) return;
 
-  const MAX_TOKEN_SCORE = 10;
+  const MAX_TOKEN_SCORE = 25;
   const products = productCards.map((card, index) => buildProductModel(card, index));
 
   const handleQueryChange = () => {
@@ -262,22 +262,26 @@ window.demoConfirm = demoConfirm;
       dataset.notes
     ].filter(Boolean).join(' ');
 
-    const nameTokens = new Set(tokenize(name));
-    const ingredientTokens = new Set(tokenize(ingredients));
-    const tagTokens = new Set(tokenize(tags));
-    const descriptionTokens = new Set(tokenize(description));
+    const nameTokenData = buildTokenData(name);
+    const ingredientTokenData = buildTokenData(ingredients);
+    const tagTokenData = buildTokenData(tags);
+    const descriptionTokenData = buildTokenData(description);
 
     const model = {
       element: card,
       originalIndex: index,
-      nameTokens,
-      ingredientTokens,
-      tagTokens,
-      descriptionTokens,
-      nameText: normalizeForMatch(name),
-      ingredientText: normalizeForMatch(ingredients),
-      tagText: normalizeForMatch(tags),
-      descriptionText: normalizeForMatch(description),
+      nameTokens: nameTokenData.tokens,
+      ingredientTokens: ingredientTokenData.tokens,
+      tagTokens: tagTokenData.tokens,
+      descriptionTokens: descriptionTokenData.tokens,
+      nameTokenCounts: nameTokenData.counts,
+      ingredientTokenCounts: ingredientTokenData.counts,
+      tagTokenCounts: tagTokenData.counts,
+      descriptionTokenCounts: descriptionTokenData.counts,
+      nameText: nameTokenData.text,
+      ingredientText: ingredientTokenData.text,
+      tagText: tagTokenData.text,
+      descriptionText: descriptionTokenData.text,
       extraText: normalizeForMatch(extras),
       fallbackText: normalizeForMatch(card.textContent || '')
     };
@@ -288,44 +292,90 @@ window.demoConfirm = demoConfirm;
   function computeTokenScore(model, token){
     let score = 0;
 
-    if (model.nameTokens.has(token)) {
-      score = Math.max(score, 10);
-    } else if (model.nameText.includes(token)) {
-      score = Math.max(score, 7);
-    }
+    score += fieldScore(
+      token,
+      model.nameTokens,
+      model.nameTokenCounts,
+      model.nameText,
+      10,
+      7,
+      0
+    );
 
-    if (model.ingredientTokens.has(token)) {
-      score = Math.max(score, 6);
-    } else if (model.ingredientText.includes(token)) {
-      score = Math.max(score, 4);
-    }
+    score += fieldScore(
+      token,
+      model.ingredientTokens,
+      model.ingredientTokenCounts,
+      model.ingredientText,
+      6,
+      4,
+      2
+    );
 
-    if (model.tagTokens.has(token)) {
-      score = Math.max(score, 5);
-    } else if (model.tagText.includes(token)) {
-      score = Math.max(score, 3);
-    }
+    score += fieldScore(
+      token,
+      model.tagTokens,
+      model.tagTokenCounts,
+      model.tagText,
+      5,
+      3,
+      1
+    );
 
-    if (model.descriptionTokens.has(token)) {
-      score = Math.max(score, 4);
-    } else if (model.descriptionText.includes(token)) {
-      score = Math.max(score, 2);
-    }
+    score += fieldScore(
+      token,
+      model.descriptionTokens,
+      model.descriptionTokenCounts,
+      model.descriptionText,
+      4,
+      2,
+      1
+    );
 
     if (model.extraText && model.extraText.includes(token)) {
-      score = Math.max(score, 2);
+      score += 2;
     }
 
     if (score === 0 && model.fallbackText.includes(token)) {
       score = 1;
     }
 
-    return score;
+    return Math.min(MAX_TOKEN_SCORE, score);
   }
 
   function tokenize(value){
     const normalized = normalizeForMatch(value);
     return normalized ? normalized.split(' ') : [];
+  }
+
+  function buildTokenData(value){
+    const text = normalizeForMatch(value);
+    const tokens = tokenize(value);
+    const tokenSet = new Set(tokens);
+    const counts = new Map();
+
+    tokens.forEach(token => {
+      counts.set(token, (counts.get(token) || 0) + 1);
+    });
+
+    return {
+      text,
+      tokens: tokenSet,
+      counts
+    };
+  }
+
+  function fieldScore(token, tokenSet, tokenCounts, text, exactWeight, partialWeight, extraPerOccurrence){
+    if (tokenSet.has(token)) {
+      const occurrences = tokenCounts.get(token) || 1;
+      return exactWeight + (occurrences - 1) * extraPerOccurrence;
+    }
+
+    if (text && text.includes(token)) {
+      return partialWeight;
+    }
+
+    return 0;
   }
 
   function normalizeForMatch(value){
